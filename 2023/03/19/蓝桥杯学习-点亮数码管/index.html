@@ -1,0 +1,229 @@
+
+<!DOCTYPE html>
+<html lang="zh-cn" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>蓝桥杯学习-点亮数码管 - 阿喵的小窝</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="Fechin,"> 
+    <meta name="description" content="这是第一份关于蓝桥杯的学习日志，四月份就是正式比赛了，也借着这个机会好好地锻炼一下吧。
+
+
+
+
+万事开头难嘛，针对与这个数码管的驱动程序，我们肯定要先根据单片机的IO分配来决定驱动的形式，此时我们就,"> 
+    <meta name="author" content="ArduinoTM"> 
+    <link rel="alternative" href="atom.xml" title="阿喵的小窝" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    
+    
+    
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:title" content="蓝桥杯学习-点亮数码管 - 阿喵的小窝"/>
+    <meta name="twitter:description" content="这是第一份关于蓝桥杯的学习日志，四月份就是正式比赛了，也借着这个机会好好地锻炼一下吧。
+
+
+
+
+万事开头难嘛，针对与这个数码管的驱动程序，我们肯定要先根据单片机的IO分配来决定驱动的形式，此时我们就,"/>
+    
+    
+    
+    
+    <meta property="og:site_name" content="阿喵的小窝"/>
+    <meta property="og:type" content="object"/>
+    <meta property="og:title" content="蓝桥杯学习-点亮数码管 - 阿喵的小窝"/>
+    <meta property="og:description" content="这是第一份关于蓝桥杯的学习日志，四月份就是正式比赛了，也借着这个机会好好地锻炼一下吧。
+
+
+
+
+万事开头难嘛，针对与这个数码管的驱动程序，我们肯定要先根据单片机的IO分配来决定驱动的形式，此时我们就,"/>
+    
+<link rel="stylesheet" href="/css/diaspora.css">
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">阿喵的小窝</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="https://arduinotm.github.io"></a>
+    <div title="播放/暂停" class="iconfont icon-play"></div>
+    <h3 class="subtitle">蓝桥杯学习-点亮数码管</h3>
+    <div class="social">
+        <div>
+            <div class="share">
+                <a title="获取二维码" class="iconfont icon-scan" href="javascript:;"></a>
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">蓝桥杯学习-点亮数码管</h1>
+        <div class="stuff">
+            <span>三月 19, 2023</span>
+            
+  <ul class="post-tags-list" itemprop="keywords"><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/%E8%93%9D%E6%A1%A5%E6%9D%AF%E5%AD%A6%E4%B9%A0/" rel="tag">蓝桥杯学习</a></li></ul>
+
+
+        </div>
+        <div class="content markdown">
+            <p>这是第一份关于蓝桥杯的学习日志，四月份就是正式比赛了，也借着这个机会好好地锻炼一下吧。</p>
+<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width="100%" height="100" src="https://music.163.com/outchain/player?type=2&id=1814370970&auto=1&height=100"></iframe>
+</iframe>
+
+<hr>
+<p>万事开头难嘛，针对与这个数码管的驱动程序，我们肯定要先根据单片机的IO分配来决定驱动的形式，此时我们就需要赛点包中所提供的原理图来进行针对性的处理了。<br>首先让我们打开资源包中的V3版本原理图，找到数码管驱动电路部分：<br><img src="/2023/03/19/%E8%93%9D%E6%A1%A5%E6%9D%AF%E5%AD%A6%E4%B9%A0-%E7%82%B9%E4%BA%AE%E6%95%B0%E7%A0%81%E7%AE%A1/%E6%95%B0%E7%A0%81%E7%AE%A1%E5%8E%9F%E7%90%86%E5%9B%BE.jpg" alt="数码管部分原理图"></p>
+<p>通过查阅原理图可得知，数码管的段选与位选分别由74HC138的Y7与Y6控制，如下表所示：</p>
+<table>
+<thead>
+<tr>
+<th align="center">功能</th>
+<th align="center">对应引脚电平</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">位选</td>
+<td align="center">A0&#x3D;0,A1&#x3D;1,A2&#x3D;1</td>
+</tr>
+<tr>
+<td align="center">段选</td>
+<td align="center">A0&#x3D;1,A1&#x3D;1,A2&#x3D;1</td>
+</tr>
+</tbody></table>
+<p>由于多个外设同时使用P0总线进行数据交换，所以我们需要操作74HC138进行外设选择，从而实现对P0端口的分时复用。</p>
+<h4 id="注意：此处有一个小坑"><a href="#注意：此处有一个小坑" class="headerlink" title="注意：此处有一个小坑"></a>注意：此处有一个小坑</h4><p>如果使用对P2口引脚的位操作进行切换，有一定几率会对非目标外设造成干扰，这里我们先将A2端口置低，将74HC138的译码结果切换至Y0-Y3，然后再操作A1与A2端口到目标外设端口，放置数据，然后将A2口置高，完成外设使能操作，最后将A2，A1，A0口逐个值低，放置外设意外使能。</p>
+<h3 id="代码实现："><a href="#代码实现：" class="headerlink" title="代码实现："></a>代码实现：</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">HC138_Switch</span><span class="params">(<span class="type">unsigned</span> <span class="type">char</span> OUT)</span>&#123;</span><br><span class="line">    HC138_A2 = <span class="number">0</span>;                    <span class="comment">//将138译码器切换至Y0-Y3</span></span><br><span class="line">    _nop_();</span><br><span class="line">    <span class="keyword">switch</span> (OUT)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">case</span> LED:                    <span class="comment">//使能LED</span></span><br><span class="line">            HC138_A0 = <span class="number">0</span>;</span><br><span class="line">            HC138_A1 = <span class="number">0</span>;</span><br><span class="line">            _nop_();</span><br><span class="line">            HC138_A2 = <span class="number">1</span>;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">case</span> ULN:                    <span class="comment">//使能ULN2003</span></span><br><span class="line">            HC138_A0 = <span class="number">1</span>;</span><br><span class="line">            HC138_A1 = <span class="number">0</span>;</span><br><span class="line">            _nop_();</span><br><span class="line">            HC138_A2 = <span class="number">1</span>;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">case</span> SEG_COM:                <span class="comment">//使能数码管位选</span></span><br><span class="line">            HC138_A0 = <span class="number">0</span>;</span><br><span class="line">            HC138_A1 = <span class="number">1</span>;</span><br><span class="line">            _nop_();</span><br><span class="line">            HC138_A2 = <span class="number">1</span>;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">case</span> SEG_DAT:                <span class="comment">//使能数码管段选</span></span><br><span class="line">            HC138_A0 = <span class="number">1</span>;</span><br><span class="line">            HC138_A1 = <span class="number">1</span>;</span><br><span class="line">            _nop_();</span><br><span class="line">            HC138_A2 = <span class="number">1</span>;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">default</span>:</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">HC138_Write</span><span class="params">(<span class="type">unsigned</span> <span class="type">char</span> DAT,<span class="type">unsigned</span> <span class="type">char</span> OUT)</span>&#123;</span><br><span class="line">    EA = <span class="number">0</span>;                        <span class="comment">//防止操作被打断</span></span><br><span class="line">    P0 = DAT;                      <span class="comment">//防止数据到总线上</span></span><br><span class="line">    HC138_Switch(OUT);             <span class="comment">//使能相应外设，外设将数据从总线上取出</span></span><br><span class="line">    HC138_A2 = <span class="number">0</span>;</span><br><span class="line">    HC138_A1 = <span class="number">0</span>;</span><br><span class="line">    HC138_A0 = <span class="number">0</span>;                  <span class="comment">//将138译码器切换至Y0，防止外设意外使能</span></span><br><span class="line">    EA = <span class="number">1</span>;                        <span class="comment">//重新启动中断</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="关于数码管的刷新"><a href="#关于数码管的刷新" class="headerlink" title="关于数码管的刷新"></a>关于数码管的刷新</h3><p>因为板上的数码管使用动态扫描接法，所以需要不停扫描才能正常地显示所有的位，所以我们可以使用一个定时器来完成这一项工作，同时这个定时器也可以作为系统的节拍器来使用，相当于ARM系列单片机的Systick。</p>
+<p>在这里我们采用定时器0：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">TIMER_Init</span><span class="params">()</span>&#123;  <span class="comment">//我们通过STC-ISP计算出11.0592Mhz下1ms的定时器初值</span></span><br><span class="line">    AUXR |= <span class="number">0x80</span>;   <span class="comment">//定时器时钟1T模式</span></span><br><span class="line">    TMOD &amp;= <span class="number">0xF0</span>;    <span class="comment">//设置定时器模式</span></span><br><span class="line">    TL0 = <span class="number">0xCD</span>;        <span class="comment">//设置定时初值</span></span><br><span class="line">    TH0 = <span class="number">0xD4</span>;        <span class="comment">//设置定时初值</span></span><br><span class="line">    TF0 = <span class="number">0</span>;        <span class="comment">//清除TF0标志</span></span><br><span class="line">    TR0 = <span class="number">0</span>;        <span class="comment">//定时器0开始计时</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="type">void</span> <span class="title function_">INT_Init</span><span class="params">()</span>&#123;    <span class="comment">//初始化系统中断</span></span><br><span class="line">    ET0 = <span class="number">1</span>;        <span class="comment">//允许定时器0中断</span></span><br><span class="line">    EA = <span class="number">1</span>;         <span class="comment">//打开总中断</span></span><br><span class="line">    TR0 = <span class="number">1</span>;        <span class="comment">//定时器0启动定时</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>除此之外，我们还需要建立一个中断处理函数来作为中断任务使用</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">Timer_Handle</span> <span class="params">()</span> interrupt 1&#123;</span><br><span class="line"></span><br><span class="line">    Sys_Tick ++;</span><br><span class="line">    <span class="keyword">if</span> (Sys_Tick &gt; <span class="number">1000</span>)&#123;</span><br><span class="line">        Sys_Tick = <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    HC138_Write(<span class="number">0x01</span>&lt;&lt;SEG_Pos,SEG_COM);</span><br><span class="line">    HC138_Write(~SEG_Buff[SEG_Pos],SEG_DAT);</span><br><span class="line">    SEG_Pos++;</span><br><span class="line">    <span class="keyword">if</span>(SEG_Pos&gt;=<span class="number">8</span>)&#123;</span><br><span class="line">        SEG_Pos = <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这里的interrupt 1表示这个函数对应单片机的中断向量1，也就是定时器0的中断处理函数，当定时器0产生中断后单片机就会执行这段函数。</p>
+<p>我们在这个函数中执行了两个任务，首先是Sys_Tick的自增，Sys_Tick是一个全局变量，通过读取Sys_Tick变量的当前值，我们可以知道我们的单片机运行了多长时间，在一些需要监测时间的场合可以很方便地实现，比如按键双击与长按。</p>
+<p>第二个任务则是数码管的刷新，在这里我们没有一次性刷新完所有的段码，而是一次只刷新一位段码，这样做是因为每一次刷新的时间都极断，如果不使用这种刷新方式的话，可能会导致数码管闪烁，而且一次刷新完所有段码需要消耗的时钟周期偏长，会导致处理中断的时间过长，从而影响该中断处理函数中的其他任务。</p>
+<h3 id="现在加上主程序"><a href="#现在加上主程序" class="headerlink" title="现在加上主程序"></a>现在加上主程序</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">main</span><span class="params">()</span>&#123;</span><br><span class="line"></span><br><span class="line">    HW_Init();</span><br><span class="line">    TIMER_Init();</span><br><span class="line">    INT_Init();</span><br><span class="line">    LED_Buff = <span class="number">0x01</span>;</span><br><span class="line">    delay_ms(<span class="number">100</span>);</span><br><span class="line">    <span class="keyword">while</span>(<span class="number">1</span>)&#123;</span><br><span class="line">        <span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;<span class="number">7</span>;i++)&#123;</span><br><span class="line">            HC138_Write(~LED_Buff,LED);</span><br><span class="line">            LED_Buff = LED_Buff &lt;&lt; <span class="number">1</span>;</span><br><span class="line">            delay_ms(<span class="number">50</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;<span class="number">7</span>;i++)&#123;</span><br><span class="line">            HC138_Write(~LED_Buff,LED);</span><br><span class="line">            LED_Buff = LED_Buff &gt;&gt; <span class="number">1</span>;</span><br><span class="line">            delay_ms(<span class="number">50</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这个程序的作用就是操作LED，实现一个左右流动的流水灯效果，由于我们的数码管在终端当中进行刷新，所以我们只需要改变SEG_Buff中的段码数据即可改变显示的内容。</p>
+<h3 id="效果图"><a href="#效果图" class="headerlink" title="效果图"></a>效果图</h3><p><img src="/2023/03/19/%E8%93%9D%E6%A1%A5%E6%9D%AF%E5%AD%A6%E4%B9%A0-%E7%82%B9%E4%BA%AE%E6%95%B0%E7%A0%81%E7%AE%A1/%E6%95%88%E6%9E%9C%E5%9B%BE.gif" alt="效果图"></p>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+                <ul id="audio-list" style="display:none">
+                    
+                        
+                            <li title="0" data-url="https://music.163.com/song/media/outer/url?id=1814370970"></li>
+                        
+                    
+                </ul>
+            
+        </div>
+        
+    <div id="gitalk-container" class="comment link"
+		data-enable="false"
+        data-ae="false"
+        data-ci=""
+        data-cs=""
+        data-r=""
+        data-o=""
+        data-a=""
+        data-d="false"
+    >查看评论</div>
+
+
+    </div>
+    
+</div>
+
+
+    </div>
+</div>
+</body>
+
+
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/typed.js"></script>
+<script src="/js/diaspora.js"></script>
+
+
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+
+
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+</html>
