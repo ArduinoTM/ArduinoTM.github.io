@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>BeagleBone Black PRU 学习笔记(1)-蚂蚁BBB改造</title>
+      <link href="/2023/10/26/BeagleBone-Black-PRU-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-1-%E8%9A%82%E8%9A%81BBB%E6%94%B9%E9%80%A0/"/>
+      <url>/2023/10/26/BeagleBone-Black-PRU-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-1-%E8%9A%82%E8%9A%81BBB%E6%94%B9%E9%80%A0/</url>
+      
+        <content type="html"><![CDATA[<p>去海鲜市场捡了两块蚂蚁矿机上拆下的BeagleBone Black阉割版，决定就这这个板子学习一下AM335x系列PMU及Linux系统。</p><hr><p>拿到板子之后首先插电试试看板子能否正常启动，不过好消息是，两块板子都可以正常启动，经过一番搜集后，在挖坑网上找到了一篇文章：</p><hr><p>前几天找了一下这款BeagleBone Black开发板，找着找着找到这玩意，买了2块回来，一块70元（带电源、原理图、补焊了USB），一块25元（缺usb外围原件）</p><p>CPU：AM3352<br>内存：256M<br>ROM： 256M NAND<br>百兆网口</p><p>跟中国版BeagleBone Black有什么区别？<br>1、阉割HDMI，保留RGB；<br>2、eMMC改为NAND，GPMC挂着NAND，GPMC挂并口设备爽啊！</p><p><strong>我的用处：GPMC接口挂NAND和2片CH438 8串口芯片，一共16串口。</strong><br><strong>目标：</strong><br>刷回原来的uboot以及内核，官方的SDK<br>挂上2片ch438，实现外挂16串口。<br><a href="https://whycan.cn/files/members/1261/LS_BBB_SCH.pdf">原理图</a><br><strong>实物图:</strong><br><img src="/2023/10/26/BeagleBone-Black-PRU-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-1-%E8%9A%82%E8%9A%81BBB%E6%94%B9%E9%80%A0/BeagleBone-ANT%E6%AD%A3%E9%9D%A2.JPG" alt="BB1"><br><img src="/2023/10/26/BeagleBone-Black-PRU-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-1-%E8%9A%82%E8%9A%81BBB%E6%94%B9%E9%80%A0/BeagleBone-ANT%E8%83%8C%E9%9D%A2.JPG" alt="BB2"><br><strong>板子刚拿到的时候没有DC插座、Mini USB、USB-A需要自行补全</strong><br>器件清单：</p><table><thead><tr><th align="center">器件位号</th><th align="center">型号</th><th align="center">数量</th><th align="center">备注</th></tr></thead><tbody><tr><td align="center">U9、U10</td><td align="center">TPD4S012DRYR</td><td align="center">2</td><td align="center">4通道ESD保护二极管阵列</td></tr><tr><td align="center">U8</td><td align="center">TPS2051BDGNR</td><td align="center">1</td><td align="center">电源开关IC</td></tr><tr><td align="center">P3</td><td align="center">AF 90° WJDG</td><td align="center">1</td><td align="center">AF 90度弯脚卷边有后盖</td></tr><tr><td align="center">P4</td><td align="center">UX60SC-MB-5ST</td><td align="center">1</td><td align="center">MINI 5P USB2.0 贴片母座</td></tr><tr><td align="center">S1、S2、S3</td><td align="center">TS342A4P-WZ</td><td align="center">3</td><td align="center">3*4*2.0MM 4脚</td></tr></tbody></table>]]></content>
+      
+      
+      <categories>
+          
+          <category> AM335x学习笔记 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Beagle Bone Black </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>蓝桥杯学习-将字符串转化为段码</title>
       <link href="/2023/03/21/%E8%93%9D%E6%A1%A5%E6%9D%AF%E5%AD%A6%E4%B9%A0-%E5%B0%86%E5%AD%97%E7%AC%A6%E4%B8%B2%E8%BD%AC%E5%8C%96%E4%B8%BA%E6%AE%B5%E7%A0%81/"/>
       <url>/2023/03/21/%E8%93%9D%E6%A1%A5%E6%9D%AF%E5%AD%A6%E4%B9%A0-%E5%B0%86%E5%AD%97%E7%AC%A6%E4%B8%B2%E8%BD%AC%E5%8C%96%E4%B8%BA%E6%AE%B5%E7%A0%81/</url>
